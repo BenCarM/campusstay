@@ -5,12 +5,13 @@ import { getStorage } from 'firebase/storage';
 import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'demo-api-key',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'campusstay-demo.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'campusstay-demo',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'campusstay-demo.appspot.com',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '1234567890',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:1234567890:web:demo',
+  apiKey: "AIzaSyDCbAErb-KTNVd8qF9BSBbBI9DomQj4zg0",
+  authDomain: "campusstay-66e91.firebaseapp.com",
+  projectId: "campusstay-66e91",
+  storageBucket: "campusstay-66e91.firebasestorage.app",
+  messagingSenderId: "787973145994",
+  appId: "1:787973145994:web:a8d654faa59244f28cf473",
+  measurementId: "G-RTECZJLMED",
 };
 
 const app = initializeApp(firebaseConfig);

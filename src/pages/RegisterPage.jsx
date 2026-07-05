@@ -1,14 +1,39 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase/config';
 import Layout from '../components/Layout';
 
 export default function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log('Register', data);
-  };
+  const onSubmit = async (data) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
 
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      uid: userCredential.user.uid,
+      name: data.name,
+      email: data.email,
+      role: data.role,
+      createdAt: new Date(),
+    });
+
+    alert("Account created successfully!");
+
+    navigate("/login");
+
+  } catch (error) {
+    alert(error.message);
+  }
+};
   return (
     <Layout title="Create your account">
       <div className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl shadow-blue-900/20">
