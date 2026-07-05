@@ -1,15 +1,23 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/config';
 import { FiBell, FiHome, FiLogOut, FiMessageSquare, FiSearch, FiSettings, FiStar, FiUser } from 'react-icons/fi';
 
 export default function Layout({ children, title }) {
   const navigate = useNavigate();
   const { user, setUser, notifications } = useAppContext();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+  try {
+    await signOut(auth);
     setUser(null);
     navigate('/');
-  };
+  } catch (error) {
+    console.error(error);
+    alert('Failed to log out. Please try again.');
+  }
+};
 
   const navItems = [
     { to: '/', label: 'Home', icon: FiHome },
