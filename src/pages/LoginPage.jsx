@@ -1,5 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase/config';
 import { useAppContext } from '../contexts/AppContext';
 import Layout from '../components/Layout';
 
@@ -8,13 +11,44 @@ export default function LoginPage() {
   const { setUser } = useAppContext();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    const role = data.email.includes('landlord') ? 'landlord' : data.email.includes('admin') ? 'admin' : 'student';
-    setUser({ uid: 'demo', role, name: 'CampusStay User', email: data.email, verified: true });
-    if (role === 'admin') navigate('/admin');
-    else if (role === 'landlord') navigate('/landlord');
-    else navigate('/student');
-  };
+  const onSubmit = async (data) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+
+    const uid = userCredential.user.uid;
+
+    const userDoc = await getDoc(doc(db, "users", uid));
+
+    if (!userDoc.exists()) {
+      alert("User profile not found.");
+      return;
+    }
+
+    const userData = userDoc.data();
+
+    setUser(userData);
+
+    switch (userData.role) {
+      case "admin":
+        navigate("/admin");
+        break;
+
+      case "landlord":
+        navigate("/landlord");
+        break;
+
+      default:
+        navigate("/student");
+    }
+
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   return (
     <Layout title="Welcome back">
