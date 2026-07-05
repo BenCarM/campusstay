@@ -27,7 +27,7 @@ export default function PropertyDetailsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-400">Starting from</p>
-                <p className="text-3xl font-semibold text-white">UGX {property.price.toLocaleString()}</p>
+                <p className="text-3xl font-semibold text-white">KSh {property.price.toLocaleString()}</p>
               </div>
               <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">★ {property.rating}</span>
             </div>

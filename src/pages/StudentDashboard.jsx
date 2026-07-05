@@ -26,7 +26,7 @@ export default function StudentDashboard() {
                 <div key={property.id} className="rounded-2xl border border-white/10 bg-slate-800/70 p-4">
                   <div className="flex items-center justify-between"><h3 className="font-semibold text-white">{property.title}</h3><span className="text-sm text-emerald-300">★ {property.rating}</span></div>
                   <p className="mt-2 text-sm text-slate-400">{property.location} • {property.university}</p>
-                  <p className="mt-3 text-sm text-slate-300">UGX {property.price.toLocaleString()} / month</p>
+                  <p className="mt-3 text-sm text-slate-300">KSh {property.price.toLocaleString()} / month</p>
                   <div className="mt-4 flex gap-2">
                     <Link to={`/property/${property.id}`} className="rounded-full bg-blue-600 px-3 py-2 text-sm text-white">View</Link>
                     <Link to="/wishlist" className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-300">Save</Link>

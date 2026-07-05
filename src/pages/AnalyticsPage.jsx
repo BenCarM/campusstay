@@ -14,7 +14,7 @@ export default function AnalyticsPage() {
         </div>
         <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-6">
           <p className="text-sm text-slate-400">Revenue</p>
-          <p className="mt-3 text-3xl font-semibold text-white">UGX 12.8M</p>
+          <p className="mt-3 text-3xl font-semibold text-white">KSh 12.8M</p>
         </div>
       </div>
     </Layout>

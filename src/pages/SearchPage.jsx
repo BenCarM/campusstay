@@ -24,7 +24,7 @@ export default function SearchPage() {
               <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-900 px-3 py-2"><FiSearch /><input value={query} onChange={(e) => setQuery(e.target.value)} className="w-full bg-transparent outline-none" placeholder="Try Kikoni" /></div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-slate-800/70 p-4">
-              <label className="mb-2 block text-sm text-slate-300">Max budget: UGX {maxPrice.toLocaleString()}</label>
+              <label className="mb-2 block text-sm text-slate-300">Max budget: KSH {maxPrice.toLocaleString()}</label>
               <input type="range" min="100000" max="400000" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} className="w-full accent-blue-400" />
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function SearchPage() {
               <p className="mt-3 text-sm text-slate-300">{property.description}</p>
               <div className="mt-4 flex items-center gap-2 text-sm text-slate-400"><FiMapPin /> {property.distance.toFixed(1)} km to campus</div>
               <div className="mt-4 flex items-center justify-between">
-                <p className="text-lg font-semibold text-white">UGX {property.price.toLocaleString()}</p>
+                <p className="text-lg font-semibold text-white">KSH {property.price.toLocaleString()}</p>
                 <Link to={`/property/${property.id}`} className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white">View details</Link>
               </div>
             </div>

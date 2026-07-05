@@ -80,7 +80,7 @@ export default function LandingPage() {
               </div>
               <p className="mt-2 text-sm text-slate-400">{property.location} • {property.university}</p>
               <div className="mt-4 flex items-center gap-2 text-sm text-slate-400"><FiMapPin /> {property.distance.toFixed(1)} km to campus</div>
-              <p className="mt-4 text-sm text-slate-300">UGX {property.price.toLocaleString()} / month</p>
+              <p className="mt-4 text-sm text-slate-300">KSh {property.price.toLocaleString()} / month</p>
               <Link to={`/property/${property.id}`} className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-300">See property <FiArrowRight /></Link>
             </div>
           ))}
