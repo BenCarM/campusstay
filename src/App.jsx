@@ -16,6 +16,7 @@ import MessagesPage from './pages/MessagesPage';
 import NotificationsPage from './pages/NotificationsPage';
 import ProfilePage from './pages/ProfilePage';
 import ManageListingsPage from './pages/ManageListingsPage';
+import AddPropertyPage from './pages/AddPropertyPage';
 import ManageUsersPage from './pages/ManageUsersPage';
 import ManageReviewsPage from './pages/ManageReviewsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
@@ -64,6 +65,7 @@ export default function App() {
 
       <Route path="/landlord" element={<ProtectedRoute role="landlord"><LandlordDashboard /></ProtectedRoute>} />
       <Route path="/manage-listings" element={<ProtectedRoute role="landlord"><ManageListingsPage /></ProtectedRoute>} />
+      <Route path="/add-property" element={<ProtectedRoute role="landlord"><AddPropertyPage /></ProtectedRoute>} />
 
       <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
       <Route path="/manage-users" element={<ProtectedRoute role="admin"><ManageUsersPage /></ProtectedRoute>} />
