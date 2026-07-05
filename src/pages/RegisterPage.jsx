@@ -11,6 +11,9 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+  console.log("Register button clicked");
+  console.log(data);
+
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -27,10 +30,10 @@ export default function RegisterPage() {
     });
 
     alert("Account created successfully!");
-
     navigate("/login");
 
   } catch (error) {
+    console.error(error);
     alert(error.message);
   }
 };

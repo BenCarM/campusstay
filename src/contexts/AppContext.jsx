@@ -1,36 +1,80 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase/config';
 
 const AppContext = createContext(null);
 
-const seedUser = {
-  uid: 'demo-student',
-  role: 'student',
-  name: 'Ada Thompson',
-  email: 'ada@student.com',
-  verified: true,
-};
-
 export function AppProvider({ children }) {
-  const [user, setUser] = useState(seedUser);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(true);
-  const [loading, setLoading] = useState(false);
+
   const [notifications, setNotifications] = useState([
-    { id: 1, title: 'Booking approved', message: 'Your viewing request was approved', unread: true },
-    { id: 2, title: 'New message', message: 'A landlord replied to your chat', unread: false },
+    {
+      id: 1,
+      title: 'Booking approved',
+      message: 'Your viewing request was approved',
+      unread: true,
+    },
+    {
+      id: 2,
+      title: 'New message',
+      message: 'A landlord replied to your chat',
+      unread: false,
+    },
   ]);
 
-  const value = useMemo(() => ({
-    user,
-    setUser,
-    darkMode,
-    setDarkMode,
-    loading,
-    setLoading,
-    notifications,
-    setNotifications,
-  }), [user, darkMode, loading, notifications]);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const userRef = doc(db, 'users', firebaseUser.uid);
+          const userSnap = await getDoc(userRef);
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+          if (userSnap.exists()) {
+            setUser(userSnap.data());
+          } else {
+            setUser({
+              uid: firebaseUser.uid,
+              name: firebaseUser.displayName || 'CampusStay User',
+              email: firebaseUser.email,
+              verified: firebaseUser.emailVerified,
+              role: 'student',
+            });
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        setUser(null);
+      }
+
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      user,
+      setUser,
+      loading,
+      setLoading,
+      darkMode,
+      setDarkMode,
+      notifications,
+      setNotifications,
+    }),
+    [user, loading, darkMode, notifications]
+  );
+
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
 }
 
 export function useAppContext() {

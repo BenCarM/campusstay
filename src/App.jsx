@@ -23,9 +23,24 @@ import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function ProtectedRoute({ children, role }) {
-  const { user } = useAppContext();
-  if (!user) return <Navigate to="/login" replace />;
-  if (role && user.role !== role) return <Navigate to="/" replace />;
+  const { user, loading } = useAppContext();
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-950 text-white">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role && user.role !== role) {
+    return <Navigate to="/" replace />;
+  }
+
   return children;
 }
 
